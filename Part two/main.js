@@ -13,7 +13,7 @@ function append(input) {
 }
 
 function deleteElem(elem) {
-    let country = elem.parentNode.innerText
+    let country = elem.parentNode.innerText.split("-")[0].trim()
     elem.parentNode.remove()
     let list = JSON.parse(localStorage.countries)
     let newList = []
@@ -22,7 +22,7 @@ function deleteElem(elem) {
             newList.push(list[i])
         }
     }
-    localStorage.countries = JSON.stringify(newList)
+    localStorage.setItem("countries", JSON.stringify(newList))
  }
 
 function func(list, myFunc){
@@ -33,6 +33,7 @@ function func(list, myFunc){
 
 function appendButtonPress(){
     let input = document.getElementById("country").value
+    input = input.charAt(0).toUpperCase() + input.slice(1,input.length)
     let url = "https://d6wn6bmjj722w.population.io/1.0/population/" + input + "/today-and-tomorrow/"
     fetch(url)
     .then(response => 
